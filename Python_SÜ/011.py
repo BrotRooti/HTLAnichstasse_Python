@@ -10,8 +10,8 @@ def spannungsteiler(r1,r2,u_ges):
     return (u1,u2)
 
 def stromteiler(R1,R2,I_ges):
-    I1 = I_ges*(( R1+ R2) / R1)
-    I2 = I_ges * ((R1 + R2) / R2)
+    I1 = I_ges*((1/(1/R1 + 1/ R2)) / R1)
+    I2 = I_ges * ((1/(1/R1 + 1/ R2)) / R2)
     return (I1,I2)
 
 ### main part
