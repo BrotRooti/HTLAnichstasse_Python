@@ -37,15 +37,17 @@ playing_field = [[" " for i in range(6)] for j in range(7)]
 
 display(playing_field)
 
-# variables wich we will need
+# variables which we will need
 counter = 0
-player = 1
+player_name_1 = input("Player 1, please enter your name: ")
+player_name_2 = input("Player 2, please enter your name: ")
+player = player_name_1
 symbol = 'X'
 
 # main game loop starts here
 while True:
-    x_cord = int(input("PLayer {} enter x-coordinate ->".format(player)))
-    y_cord = int(input("PLayer {} enter y-coordinate ->".format(player)))
+    x_cord = int(input("{} enter x-coordinate ->".format(player)))
+    y_cord = int(input("{} enter y-coordinate ->".format(player)))
     if (x_cord >= 7 or y_cord >= 6 or x_cord < 0 or y_cord < 0):
         print("You stupid ;) \nJust joking your coordinates are out of range, please try again!")
         continue
@@ -73,13 +75,13 @@ while True:
 
         # check for win
         if (check_for_win()):
-            print("Congratulations Player {} you won !!!".format(player))
+            print("Congratulations {} you won !!!".format(player))
             break
 
         # change player
-        if (player == 1):
-            player = 2
+        if (player == player_name_1):
+            player = player_name_2
             symbol = 'O'
         else:
-            player = 1
+            player = player_name_1
             symbol = 'X'
