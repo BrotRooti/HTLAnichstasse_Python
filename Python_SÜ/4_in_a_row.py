@@ -6,6 +6,9 @@ Phillip
 import time
 
 def display(list):
+    #loop to make free space
+    for x in range(50):
+        print("")
     # own loop to display the playing field
     for x in range(7):
         print(" {}".format(x), end='')
@@ -31,6 +34,23 @@ def check_for_win():
         return 1
     return 0
 
+def check_for_tie():
+    # if all fields are filled then return 1
+    # else return 0
+    for row in range(0, 3, 1):
+        for column in range(0, 3, 1):
+            if (playing_field[row][column] == " "):
+                return 0
+    return 1
+
+def dropping_chip():
+    # animation of dropping a chip
+    for x in range(6):
+        for y in range(7):
+            print("|{}".format(playing_field[y][x]), end='')
+
+
+
 print("")
 print("    ██╗  ██╗    ██╗███╗   ██╗     █████╗     ██████╗  ██████╗ ██╗    ██╗ ")
 print("    ██║  ██║    ██║████╗  ██║    ██╔══██╗    ██╔══██╗██╔═══██╗██║    ██║ ")
@@ -53,14 +73,14 @@ symbol = 'X'
 # main game loop starts here
 while True:
     display(playing_field)
-    x_cord = int(input("{} enter x-coordinate ->".format(player)))
-    y_cord = int(input("{} enter y-coordinate ->".format(player)))
-    if (x_cord >= 7 or y_cord >= 6 or x_cord < 0 or y_cord < 0):
+    x_cord = int(input("{} please enter column to drop your chip ->".format(player)))
+
+    # coordinates are on the playing_field
+    if (x_cord >= 7 or x_cord < 0):
         print("You stupid ;) \nJust joking your coordinates are out of range, please try again!")
         continue
 
     else:
-        # coordinates are on the playing_field
         # check if this field is still free?
         if (playing_field[x_cord][y_cord] == ' '):
             # field is free
