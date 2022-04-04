@@ -31,11 +31,17 @@ def check_for_win():
         return 1
     return 0
 
+print("")
+print("    ██╗  ██╗    ██╗███╗   ██╗     █████╗     ██████╗  ██████╗ ██╗    ██╗ ")
+print("    ██║  ██║    ██║████╗  ██║    ██╔══██╗    ██╔══██╗██╔═══██╗██║    ██║ ")
+print("    ███████║    ██║██╔██╗ ██║    ███████║    ██████╔╝██║   ██║██║ █╗ ██║ ")
+print("    ╚════██║    ██║██║╚██╗██║    ██╔══██║    ██╔══██╗██║   ██║██║███╗██║ ")
+print("         ██║    ██║██║ ╚████║    ██║  ██║    ██║  ██║╚██████╔╝╚███╔███╔╝ ")
+print("         ╚═╝    ╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝  ")
+print("")
 
 #### Main programm starts here ####
 playing_field = [[" " for i in range(6)] for j in range(7)]
-
-display(playing_field)
 
 # variables which we will need
 counter = 0
@@ -46,6 +52,7 @@ symbol = 'X'
 
 # main game loop starts here
 while True:
+    display(playing_field)
     x_cord = int(input("{} enter x-coordinate ->".format(player)))
     y_cord = int(input("{} enter y-coordinate ->".format(player)))
     if (x_cord >= 7 or y_cord >= 6 or x_cord < 0 or y_cord < 0):
