@@ -17,7 +17,7 @@ def display(list):
     for y in range(6):
         for x in range(7):
             print("|{}".format(list[x][y]), end='')
-        print("| {}".format(y))
+        print("| ".format(y))
 
 
 def check_for_win():
