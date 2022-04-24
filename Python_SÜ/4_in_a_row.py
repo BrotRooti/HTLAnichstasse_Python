@@ -5,7 +5,7 @@ Phillip
 '''
 import time
 
-def display(list):
+def display(field):
     # loop to make free space
     for x in range(50):
         print("")
@@ -19,35 +19,84 @@ def display(list):
     for y in range(6):
         for x in range(7):
             # creates a row of lines between the playing field
-            print("|{}".format(list[x][y]), end='')
+            print("|{}".format(field[x][y]), end='')
         # creates the most left line and a vertical offset
         print("| ".format(y))
 
-def check_for_win(x_cord,y_cord,symbol):
-    # if a player has 4 in a row or diagonal then return 1
-    # else return 0
-    # check for vertical
-    for x in range (6):
-        if (playing_field[x_cord][y_cord] == symbol):
-            if (playing_field[x_cord][y_cord+1] == symbol):
-                if (playing_field[x_cord][y_cord+2] == symbol):
-                    if (playing_field[x_cord][y_cord+3] == symbol):
-                        return 1
-    # check for horizontal
-    for y in range (7):
-        if (playing_field[x_cord][y] == symbol):
-            if (playing_field[x_cord+1][y] == symbol):
-                if (playing_field[x_cord+2][y] == symbol):
-                    if (playing_field[x_cord+3][y] == symbol):
-                        return 1
-    # check for diagonal
-    if (x_cord == y_cord):
-        for x in range (6):
-            if (playing_field[x][x] == symbol):
-                if (playing_field[x+1][x+1] == symbol):
-                    if (playing_field[x+2][x+2] == symbol):
-                        if (playing_field[x+3][x+3] == symbol):
-                            return 1
+def check_for_win (x_cord,y_cord,field,symbol):
+    # checks if there is a win inside the field
+    # go down and check if there is a symbol if not break
+    for y in range(y_cord,6):
+        if field[x_cord][y] != symbol:
+            break
+        # checks if the last y cord is reached
+        elif y == 5:
+            # returns true if there is a win
+            return True
+    # go up and check if there is a symbol if not break
+    for y in range(y_cord,-1,-1):
+        if field[x_cord][y] != symbol:
+            break
+        # checks if the last y cord is reached
+        elif y == 0:
+            # returns true if there is a win
+            return True
+    # go right and check if there is a symbol if not break
+    for x in range(x_cord,7):
+        if field[x][y_cord] != symbol:
+            break
+        # checks if the last x cord is reached
+        if x == 6:
+            # returns true if there is a win
+            return True
+    # go left and check if there is a symbol if not break
+    for x in range(x_cord,-1,-1):
+        if field[x][y_cord] != symbol:
+            break
+        # checks if the last x cord is reached
+        elif x == 0:
+            # returns true if there is a win
+            return True
+    # go down right and check if there is a symbol if not break
+    for x,y in zip(range(x_cord,6),range(y_cord,6)):
+        if field[x][y] != symbol:
+            break
+        # checks if the last x cord is reached
+        elif x == 5:
+            # returns true if there is a win
+            return True
+    # go up left and check if there is a symbol if not break
+    for x,y in zip(range(x_cord,-1,-1),range(y_cord,-1,-1)):
+        if field[x][y] != symbol:
+            break
+        # checks if the last x cord is reached
+        elif x == 0:
+            # returns true if there is a win
+            return True
+    # go down left and check if there is a symbol if not break
+    for x,y in zip(range(x_cord,-1,-1),range(y_cord,6)):
+        if field[x][y] != symbol:
+            break
+        # checks if the last x cord is reached
+        elif x == 0:
+            # returns true if there is a win
+            return True
+    # go up right and check if there is a symbol if not break
+    for x,y in zip(range(x_cord,6),range(y_cord,-1,-1)):
+        if field[x][y] != symbol:
+            break
+        # checks if the last x cord is reached
+        elif x == 5:
+            # returns true if there is a win
+            return True
+    # returns false if there is no win
+    return False
+
+
+
+
+
+
 
 def dropping_chip(x_cord,y_cord):
     # animation of dropping a chip
@@ -55,8 +104,8 @@ def dropping_chip(x_cord,y_cord):
         # cancels the animation if the y cord is out of range
         if y_cord == 5:
             #stores the y_cord and ends the animation
-            break
             y_cord_old = y_cord
+            return y_cord_old
         # moves the chip down and stores the previous y cord
         y_cord_old = y_cord
         y_cord = y_cord + 1
@@ -70,13 +119,9 @@ def dropping_chip(x_cord,y_cord):
             # drops the chip on the new y cord
             playing_field[x_cord][y_cord] = symbol
             # waits for 0.5 seconds
-            time.sleep(0.5)
-
+            #time.sleep(0.5)
         else:
-            y_cord_old = y_cord
             break
-
-
 
 print("")
 print("    ██╗  ██╗    ██╗███╗   ██╗     █████╗     ██████╗  ██████╗ ██╗    ██╗ ")
@@ -91,18 +136,18 @@ print("")
 #creates the playing field and fills it with empty spaces (y_size = 6, x_size = 7)
 playing_field = [[" " for i in range(6)] for j in range(7)]
 
-# variables which we will need
+# variables which we will need later
 
 # defines a counter for the number of turns and y-coordinates for the chip and the previous y-coordinate
 counter = 0
 y_cord = 0
+x_cord = 0
 y_cord_old = 0
 
 # defines a variable for the player so they can input their name
 player_name_1 = input("Player 1, please enter your name: ")
 player_name_2 = input("Player 2, please enter your name: ")
 player = player_name_1
-
 # defines a variable for the player so they can input their symbol
 player_symbol_1 = input("{}, please enter your symbol: ".format(player_name_1))
 player_symbol_2 = input("{}, please enter your symbol: ".format(player_name_2))
@@ -149,13 +194,12 @@ while True:
             #place the chip on the top of the column
             playing_field[x_cord][y_cord] = symbol
             # start the dropping animation
-            dropping_chip(x_cord,y_cord)
+            y_cord_old =dropping_chip(x_cord,y_cord)
         else:
             # field is already taken by someone, store this data in a variable and restart the loop
             # so the player can enter a new value and the error message is displayed
             was_taken = 1
             continue
-
     #reset the error variables
     was_out_of_range = 0
     was_taken = 0
@@ -169,9 +213,8 @@ while True:
         print("The game is a DRAW!")
         break
 
-
     # check for win
-    if (check_for_win(x_cord,y_cord_old,symbol) == 1):
+    if (check_for_win(x_cord,y_cord_old,playing_field,symbol) == True):
         print("Congratulations {} you won !!!".format(player))
         break
 
