@@ -23,42 +23,42 @@ def display(list):
         # creates the most left line and a vertical offset
         print("| ".format(y))
 
-def check_for_win():
-    # if a player has 3 in a row or diagonal then return 1
+def check_for_win(x_cord,y_cord,symbol):
+    # if a player has 4 in a row or diagonal then return 1
     # else return 0
-    for row in range(0, 3, 1):
-        if (playing_field[0][row] == playing_field[1][row] == playing_field[2][row] != " "):
-            return 1
-        elif (playing_field[row][0] == playing_field[row][1] == playing_field[row][2] != " "):
-            return 1
-    if (playing_field[0][0] == playing_field[1][1] == playing_field[2][2] != " "):
-        return 1
-    elif (playing_field[2][0] == playing_field[1][1] == playing_field[0][2] != " "):
-        return 1
-    return 0
-
-def check_for_tie():
-    # if all fields are filled then return 1
-    # else return 0
-    for row in range(0, 3, 1):
-        for column in range(0, 3, 1):
-            if (playing_field[row][column] == " "):
-                return 0
-    return 1
+    # check for horizontal
+    for x in range (6):
+        if (playing_field[x_cord][y_cord] == symbol):
+            if (playing_field[x_cord][y_cord+1] == symbol):
+                if (playing_field[x_cord][y_cord+2] == symbol):
+                    if (playing_field[x_cord][y_cord+3] == symbol):
+                        return 1
 
 def dropping_chip(x_cord,y_cord):
     # animation of dropping a chip
     while (True):
+        # cancels the animation if the y cord is out of range
         if y_cord == 5:
+            #stores the y_cord and ends the animation
             break
+            y_cord_old = y_cord
+        # moves the chip down and stores the previous y cord
         y_cord_old = y_cord
         y_cord = y_cord + 1
+
+        # checks if a chip is on the field
         if (playing_field[x_cord][y_cord] == ' '):
-            playing_field[x_cord][y_cord_old] = ' '
-            playing_field[x_cord][y_cord] = symbol
-            time.sleep(0.5)
+            # displays the new playing field
             display(playing_field)
+            # removes the chip from the previous y cord
+            playing_field[x_cord][y_cord_old] = ' '
+            # drops the chip on the new y cord
+            playing_field[x_cord][y_cord] = symbol
+            # waits for 0.5 seconds
+            time.sleep(0.5)
+
         else:
+            y_cord_old = y_cord
             break
 
 
@@ -105,8 +105,9 @@ y_pos = 0
 while True:
     # displays the playing field
     display(playing_field)
-    # asks the player to input a column
-    x_cord = int(input("{} please enter the column to drop your chip in ->".format(player)))
+
+    # resets the y-coordinate to 0
+    y_cord = 0
 
     # display an error message if the field was out of range
     if (was_out_of_range == 1):
@@ -115,6 +116,9 @@ while True:
     # display an error message if the field was already taken
     if (was_taken == 1):
         print("This field is already taken!")
+
+    # asks the player to input a column
+    x_cord = int(input("{} please enter the column to drop your chip in ->".format(player)))
 
     # coordinates are on the playing_field
     if (x_cord >= 7 or x_cord < 0):
@@ -146,12 +150,13 @@ while True:
     counter = counter + 1
 
     # check for draw
-    if (counter == 9):
+    if (counter == 42):
         print("The game is a DRAW!")
         break
 
+
     # check for win
-    if (check_for_win()):
+    if (check_for_win(x_cord,y_cord_old,symbol) == 1):
         print("Congratulations {} you won !!!".format(player))
         break
 
