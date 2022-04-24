@@ -26,13 +26,28 @@ def display(list):
 def check_for_win(x_cord,y_cord,symbol):
     # if a player has 4 in a row or diagonal then return 1
     # else return 0
-    # check for horizontal
+    # check for vertical
     for x in range (6):
         if (playing_field[x_cord][y_cord] == symbol):
             if (playing_field[x_cord][y_cord+1] == symbol):
                 if (playing_field[x_cord][y_cord+2] == symbol):
                     if (playing_field[x_cord][y_cord+3] == symbol):
                         return 1
+    # check for horizontal
+    for y in range (7):
+        if (playing_field[x_cord][y] == symbol):
+            if (playing_field[x_cord+1][y] == symbol):
+                if (playing_field[x_cord+2][y] == symbol):
+                    if (playing_field[x_cord+3][y] == symbol):
+                        return 1
+    # check for diagonal
+    if (x_cord == y_cord):
+        for x in range (6):
+            if (playing_field[x][x] == symbol):
+                if (playing_field[x+1][x+1] == symbol):
+                    if (playing_field[x+2][x+2] == symbol):
+                        if (playing_field[x+3][x+3] == symbol):
+                            return 1
 
 def dropping_chip(x_cord,y_cord):
     # animation of dropping a chip
