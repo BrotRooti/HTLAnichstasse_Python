@@ -18,11 +18,10 @@ def display(list):
     # creates the playing field
     for y in range(6):
         for x in range(7):
-            # creates the playing field between the lines
+            # creates a row of lines between the playing field
             print("|{}".format(list[x][y]), end='')
-        # creates the line between the rows
+        # creates the most left line and a vertical offset
         print("| ".format(y))
-
 
 def check_for_win():
     # if a player has 3 in a row or diagonal then return 1
@@ -47,11 +46,20 @@ def check_for_tie():
                 return 0
     return 1
 
-def dropping_chip():
+def dropping_chip(x_cord,y_cord):
     # animation of dropping a chip
-    for x in range(6):
-        for y in range(7):
-            print("|{}".format(playing_field[y][x]), end='')
+    while (True):
+        if y_cord == 5:
+            break
+        y_cord_old = y_cord
+        y_cord = y_cord + 1
+        if (playing_field[x_cord][y_cord] == ' '):
+            playing_field[x_cord][y_cord_old] = ' '
+            playing_field[x_cord][y_cord] = symbol
+            time.sleep(0.5)
+            display(playing_field)
+        else:
+            break
 
 
 
@@ -65,31 +73,40 @@ print("         ╚═╝    ╚═╝╚═╝  ╚═══╝    ╚═╝  �
 print("")
 
 #### Main programm starts here ####
+#creates the playing field and fills it with empty spaces (y_size = 6, x_size = 7)
 playing_field = [[" " for i in range(6)] for j in range(7)]
 
 # variables which we will need
 
-# defines a counter for the number of turns and y-coordinates for the chip
+# defines a counter for the number of turns and y-coordinates for the chip and the previous y-coordinate
 counter = 0
 y_cord = 0
+y_cord_old = 0
+
 # defines a variable for the player so they can input their name
 player_name_1 = input("Player 1, please enter your name: ")
 player_name_2 = input("Player 2, please enter your name: ")
 player = player_name_1
+
 # defines a variable for the player so they can input their symbol
 player_symbol_1 = input("{}, please enter your symbol: ".format(player_name_1))
 player_symbol_2 = input("{}, please enter your symbol: ".format(player_name_2))
 symbol = player_symbol_1
+
 # defines a variable to store temporary values
 was_taken = 0
 was_out_of_range = 0
+
+#defines variables to store the chip position
+x_pos = 0
+y_pos = 0
 
 # main game loop starts here
 while True:
     # displays the playing field
     display(playing_field)
     # asks the player to input a column
-    x_cord = int(input("{} please enter column to drop your chip ->".format(player)))
+    x_cord = int(input("{} please enter the column to drop your chip in ->".format(player)))
 
     # display an error message if the field was out of range
     if (was_out_of_range == 1):
@@ -110,7 +127,10 @@ while True:
         # check if this field is still free?
         if (playing_field[x_cord][y_cord] == ' '):
             # field is free
+            #place the chip on the top of the column
             playing_field[x_cord][y_cord] = symbol
+            # start the dropping animation
+            dropping_chip(x_cord,y_cord)
         else:
             # field is already taken by someone, store this data in a variable and restart the loop
             # so the player can enter a new value and the error message is displayed
@@ -122,23 +142,25 @@ while True:
     was_taken = 0
 
 
-        # update counter
-        counter = counter + 1
+    # update counter
+    counter = counter + 1
 
-        # check for draw
-        if (counter == 9):
-            print("The game is a DRAW!")
-            break
+    # check for draw
+    if (counter == 9):
+        print("The game is a DRAW!")
+        break
 
-        # check for win
-        if (check_for_win()):
-            print("Congratulations {} you won !!!".format(player))
-            break
+    # check for win
+    if (check_for_win()):
+        print("Congratulations {} you won !!!".format(player))
+        break
 
-        # change player
-        if (player == player_name_1):
-            player = player_name_2
-            symbol = player_symbol_2
-        else:
-            player = player_name_1
-            symbol = player_symbol_1
+    # change player
+    if (player == player_name_1):
+        # if player 1 is the current player change to player 2
+        player = player_name_2
+        symbol = player_symbol_2
+    else:
+        # if player 2 is the current player change to player 1
+        player = player_name_1
+        symbol = player_symbol_1
