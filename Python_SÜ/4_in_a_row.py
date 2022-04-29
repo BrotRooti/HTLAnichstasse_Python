@@ -185,7 +185,7 @@ def dropping_chip(x_cord, y_cord):
             # drops the chip on the new y cord
             playing_field[x_cord][y_cord] = symbol
             # waits for 0.5 seconds
-            # time.sleep(0.5)
+             time.sleep(0.5)
         else:
             y_cord_old = y_cord
             return y_cord_old
