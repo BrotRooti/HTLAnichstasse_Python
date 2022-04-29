@@ -111,7 +111,7 @@ def check_for_win (x_cord,y_cord,field,symbol,y_dim,x_dim):
         return True
     win = 0
     # go up-left and check if there is a symbol if not break
-    for x in range(x_dim):
+    for x in range(x_dim-1,-1,-1):
         for y in range(y_dim):
             if (field[x][y] == symbol):
                 win = win + 1
