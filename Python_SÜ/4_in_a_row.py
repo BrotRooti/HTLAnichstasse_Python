@@ -5,12 +5,13 @@ Phillip
 '''
 import time
 
+
 def display(field):
     # loop to make free space
     for x in range(50):
         print("")
     # own loop to display the playing field
-    # diplays numbers on top of the playing field
+    # displays numbers on top of the playing field
     for x in range(x_dim):
         print(" {}".format(x), end='')
     print()
@@ -23,116 +24,153 @@ def display(field):
         # creates the most left line and a vertical offset
         print("| ".format(y))
 
-def check_for_win (x_cord,y_cord,field,symbol,y_dim,x_dim):
-    def win_ceck(win):
+
+def check_for_win(x_cord, y_cord, field, symbol, y_dim, x_dim):
+    def win_check(win):
         # checks if there is a win and resets if not
         if (win == 4):
             return True
         else:
             return False
+
     # go down and check if there is a symbol if not break
-    win = 0
-    print(x_cord,y_cord)
-    for y in range(y_dim):
-        if (field[x_cord][y] == symbol):
-            win = win + 1
-        else:
-             break
-    #checks if there is a win and resets if not
-    win_state = win_ceck(win)
-    if (win_state == True):
-        return True
-    win = 0
-    # go up and check if there is a symbol if not break
-    for y in range(y_dim-1,-1,-1):
+    win = 1
+    print(x_cord, y_cord)
+
+    for y in range(y_cord, y_dim):
         if (field[x_cord][y] == symbol):
             win = win + 1
         else:
             break
 
-    #checks if there is a win and resets if not
-    win_state = win_ceck(win)
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win down")
         return True
-    win = 0
+    else:
+        win = 0
+
     # go right and check if there is a symbol if not break
-    for x in range(x_dim):
+    for x in range(x_cord, x_dim):
         if (field[x][y_cord] == symbol):
             win = win + 1
         else:
             break
-    win_state = win_ceck(win)
+
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win right")
         return True
-    win = 0
+    else:
+        win = 0
 
     # go left and check if there is a symbol if not break
-    for x in range(x_dim-1,-1,-1):
+    for x in range(x_cord, -1, -1):
         if (field[x][y_cord] == symbol):
             win = win + 1
         else:
             break
 
-    win_state = win_ceck(win)
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win left")
         return True
-    win = 0
+    else:
+        win = 1
+
     # go down-right and check if there is a symbol if not break
-    for x in range(x_dim):
-        for y in range(y_dim-1,-1,-1):
-            if (field[x][y] == symbol):
-                win = win + 1
-            else:
-                break
-    win_state = win_ceck(win)
+    try:
+        for x in range(x_cord, x_dim):
+            for y in range(y_cord, y_dim):
+                if (field[x][y] == symbol):
+                    win = win + 1
+                else:
+                    break
+    except:
+        pass
+
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win down-right")
         return True
-    win = 0
+    else:
+        win = 1
+
     # go down-left and check if there is a symbol if not break
-    for x in range(x_dim-1,-1,-1):
-        for y in range(y_dim-1,-1,-1):
-            if (field[x][y] == symbol):
-                win = win + 1
-            else:
-                break
-    win_state = win_ceck(win)
+    try:
+        for x in range(x_cord, -1, -1):
+            for y in range(y_cord, y_dim):
+                if (field[x][y] == symbol):
+                    win = win + 1
+                else:
+                    break
+    except:
+        pass
+
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win down-left")
         return True
-    win = 0
+    else:
+        win = 1
+
     # go up-right and check if there is a symbol if not break
-    for x in range(x_dim):
-        for y in range(y_dim):
-            if (field[x][y] == symbol):
-                win = win + 1
-            else:
-                break
-    win_state = win_ceck(win)
+    try:
+        for x in range(x_cord, x_dim):
+            for y in range(y_cord, -1, -1):
+                if (field[x][y] == symbol):
+                    win = win + 1
+                else:
+                    break
+    except:
+        pass
+
+    # checks if there is a win and resets if not
+    win_state = win_check(win)
     if (win_state == True):
+        if DEBUG:
+            print("Win up-right")
         return True
-    win = 0
+    else:
+        win = 1
+
     # go up-left and check if there is a symbol if not break
-    for x in range(x_dim-1,-1,-1):
-        for y in range(y_dim):
-            if (field[x][y] == symbol):
-                win = win + 1
-            else:
-                break
-    win_state = win_ceck(win)
+    try:
+        for x in range(x_cord, -1, -1):
+            for y in range(y_cord, -1, -1):
+                if (field[x][y] == symbol):
+                    win = win + 1
+                else:
+                    break
+    except:
+        pass
+
+    # checks if there is a win
+    win_state = win_check(win)
     if (win_state == True):
-        return True
-    print(win_state)
-    if (win_state == True):
+        if DEBUG:
+            print("Win up-left")
         return True
     else:
         return False
 
 
-def dropping_chip(x_cord,y_cord):
+def dropping_chip(x_cord, y_cord):
     # animation of dropping a chip
     while (True):
         # cancels the animation if the y cord is out of range
         if y_cord == 5:
-            #stores the y_cord and ends the animation
+            # stores the y_cord and ends the animation
             y_cord_old = y_cord
             return y_cord_old
         # moves the chip down and stores the previous y cord
@@ -147,15 +185,17 @@ def dropping_chip(x_cord,y_cord):
             # drops the chip on the new y cord
             playing_field[x_cord][y_cord] = symbol
             # waits for 0.5 seconds
-            #time.sleep(0.5)
+            # time.sleep(0.5)
         else:
             y_cord_old = y_cord
             return y_cord_old
+
 
 ################################################################################
 # Dimensions of the playing field
 y_dim = 6
 x_dim = 7
+DEBUG = True
 ################################################################################
 
 print("")
@@ -167,8 +207,8 @@ print("         ██║    ██║██║ ╚████║    ██║ 
 print("         ╚═╝    ╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝  ")
 print("")
 
-#### Main programm starts here ####
-#creates the playing field and fills it with empty spaces (y_size = 6, x_size = 7)
+#### Main program starts here ####
+# creates the playing field and fills it with empty spaces (y_size = 6, x_size = 7)
 playing_field = [[" " for y_size in range(y_dim)] for x_size in range(x_dim)]
 
 # defines a counter for the number of turns and y-coordinates for the chip and the previous y-coordinate
@@ -190,7 +230,7 @@ symbol = player_symbol_1
 was_taken = 0
 was_out_of_range = 0
 
-#defines variables to store the chip position
+# defines variables to store the chip position
 x_pos = 0
 y_pos = 0
 
@@ -224,20 +264,19 @@ while True:
         # check if this field is still free?
         if (playing_field[x_cord][y_cord] == ' '):
             # field is free
-            #place the chip on the top of the column
+            # place the chip on the top of the column
             playing_field[x_cord][y_cord] = symbol
             # start the dropping animation
-            y_cord_old =dropping_chip(x_cord,y_cord)
+            y_cord_old = dropping_chip(x_cord, y_cord)
         else:
             # field is already taken by someone, store this data in a variable and restart the loop
             # so the player can enter a new value and the error message is displayed
             was_taken = 1
             continue
 
-    #reset the error variables
+    # reset the error variables
     was_out_of_range = 0
     was_taken = 0
-
 
     # update counter
     counter = counter + 1
@@ -249,10 +288,9 @@ while True:
 
     display(playing_field)
     # check for win
-    if (check_for_win(x_cord,y_cord_old,playing_field,symbol,y_dim,x_dim) == True):
+    if (check_for_win(x_cord, y_cord_old, playing_field, symbol, y_dim, x_dim) == True):
         print("Congratulations {} you won !!!".format(player))
         break
-
 
     y_cord_old = 0
     # change player
