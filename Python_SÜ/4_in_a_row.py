@@ -79,7 +79,7 @@ def check_for_win (x_cord,y_cord,field,symbol,y_dim,x_dim):
     win = 0
     # go down-right and check if there is a symbol if not break
     for x in range(x_dim):
-        for y in range(y_dim):
+        for y in range(y_dim-1,-1,-1):
             if (field[x][y] == symbol):
                 win = win + 1
             else:
@@ -89,8 +89,8 @@ def check_for_win (x_cord,y_cord,field,symbol,y_dim,x_dim):
         return True
     win = 0
     # go down-left and check if there is a symbol if not break
-    for x in range(x_dim):
-        for y in range(y_dim):
+    for x in range(x_dim-1,-1,-1):
+        for y in range(y_dim-1,-1,-1):
             if (field[x][y] == symbol):
                 win = win + 1
             else:
