@@ -100,7 +100,7 @@ while True:
 
     tk.messagebox.showinfo(title="Get Program", message="Your result is: \n U = {}V \n I = {}A".format(U, I))
 
-    restart = tk.messagebox.askyesno(title="Get Program", message="Do you want to calculate another one?")
+    restart = tk.messagebox.askyesno(title="Get Program", message="Do you wish to calculate another one?")
     if restart == False:
         break
     else:
