@@ -43,7 +43,7 @@ class MyApp(Frame):
                     command=lambda: [self.soundcloud_download(), b1.destroy(),
                                      b2.destroy(), b3.destroy(), b4.destroy()])
 
-        b4 = Button(master=self.f1, text="1/1", bg="black",
+        b4 = Button(master=self.f1, text="1/1", bg="green",
                     command=lambda: [self.Placeholder_download(), b1.destroy(),
                                      b2.destroy(), b3.destroy(), b4.destroy()])
 
