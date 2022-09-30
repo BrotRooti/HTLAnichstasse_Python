@@ -1,2 +1,2 @@
-# HTLAnichstasse_Python
+# HTLAnichstrasse_Python
 Prof. Signitzer Python 
